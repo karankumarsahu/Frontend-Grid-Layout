@@ -13,13 +13,18 @@ const App = () => {
     }
   };
 
-  const generateGridTemplateColumns = (num: number) => {
-    return `repeat(${num}, minmax(0, 1fr))`;
+  const generateGridTemplateRows = (num: number) => {
+    if (num <= 3) return '1fr';
+    if (num <= 6) return '1fr 1fr';
+    if (num <= 9) return '1fr 1fr 1fr';
+    return '1fr 1fr 1fr 1fr';
   };
+
+  const gridHeight = participantGrid <= 3 ? 'h-full' : participantGrid <= 6 ? 'h-1/2' : participantGrid <= 9 ? 'h-1/3' : 'h-1/4';
 
   return (
     <>
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen overflow-hidden">
         <div className="w-[85%] h-full m-auto pt-10">
           <form
             className="w-full flex items-center flex-col"
@@ -43,15 +48,15 @@ const App = () => {
           </form>
 
           <div
-            className="grid gap-4 mt-10"
+            className={`h-[70vh] grid gap-4 mt-10 grid-cols-3 grid-rows-${generateGridTemplateRows(participantGrid)}`}
             style={{
-              gridTemplateColumns: generateGridTemplateColumns(participantGrid),
+              gridTemplateRows: generateGridTemplateRows(participantGrid),
             }}
           >
             {[...Array(participantGrid)].map((_, index) => (
               <div
                 key={index}
-                className={`w-full h-10 ${
+                className={`w-full ${gridHeight} ${
                   index === 0 ? "bg-blue-500" : "bg-[#009E66]"
                 } text-white rounded-lg flex items-center justify-center`}
               >
