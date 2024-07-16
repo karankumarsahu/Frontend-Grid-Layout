@@ -33,4 +33,4 @@ jobs:
         echo "Deploying to GitHub Pages..."
         gh-pages -d dist
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
